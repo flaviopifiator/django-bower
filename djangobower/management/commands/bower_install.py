@@ -18,6 +18,18 @@ class Command(BaseBowerCommand):
                     default=False,
                     help='Allow installing bower packages even when user executing this script is root'),
     )
+    if not hasattr(BaseBowerCommand, 'option_list'):
+        base_opions_list = ()
+    else:
+        base_opions_list = BaseBowerCommand.option_list
+
+    option_list = base_opions_list + (
+        make_option('-F',     # this line and lines below it are unchanged
+                    action='store_true',
+                    dest='force',
+                    default=False,
+                    help='Force installation of latest package version on conflict'),
+    )
     # for Django>=1.10
     def add_arguments(self, parser):
         parser.add_argument('--force',
